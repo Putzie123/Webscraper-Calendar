@@ -1,8 +1,6 @@
 # dit moet je zelf doen per persoon!
 # https://developers.google.com/calendar/quickstart/python
 
-# evt dit nog doen (developers)? https://developers.google.com/calendar/auth
-
 # calendar imports
 from __future__ import print_function
 import datetime
@@ -13,6 +11,7 @@ from google_auth_oauthlib.flow import InstalledAppFlow
 from google.auth.transport.requests import Request
 from datetime import datetime
 import time
+import json
 
 # webscraping imports
 import requests
@@ -22,17 +21,17 @@ from bs4 import BeautifulSoup
 url_login = "https://newlife010.churchbook.nl/login/Loginform.cfm"
 roosterUrl = "https://newlife010.churchbook.nl/locatie/sp_agenda.cfc?method=getEvents"
 headers = {"user-agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/87.0.4280.101 Safari/537.36"}
-checkPersonen = ["Stefan Poot", "Anne Lucia Snel"]
 SCOPES = ['https://www.googleapis.com/auth/calendar']
-calendar = False
+calendar = True
 
 today = datetime.now().strftime("%Y-%m-%d")
 print(datetime.now().strftime("%d-%m-%Y"))
 
-with open("inlog.txt", "r") as f:
-    data = f.readline()
-    username = str(data.split(",")[0])
-    password = str(data.split(",")[1][:-1])
+with open("inlog.json") as json_file:
+    data = json.load(json_file)
+    username = data["username"]
+    password = data["password"]
+    checkPersonen = data["names"]
 
 def scraper():
     def ingedeeldChecken(datum, id, title):

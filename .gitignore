@@ -129,7 +129,7 @@ dmypy.json
 .pyre/
 
 # wachtwoord
-inlog.txt
+inlog.json
 credentials.json
 Oud script.py
 quickstart.py
