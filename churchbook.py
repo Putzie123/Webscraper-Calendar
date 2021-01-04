@@ -1,3 +1,8 @@
+# dit moet je zelf doen per persoon!
+# https://developers.google.com/calendar/quickstart/python
+
+# evt dit nog doen (developers)? https://developers.google.com/calendar/auth
+
 # calendar imports
 from __future__ import print_function
 import datetime
@@ -23,6 +28,11 @@ calendar = True
 
 today = datetime.now().strftime("%Y-%m-%d")
 print(datetime.now().strftime("%d-%m-%Y"))
+
+with open("inlog.txt", "r") as f:
+    data = f.read()
+    username = str(data.split(",")[0])
+    password = str(data.split(",")[1])
 
 def scraper():
     def ingedeeldChecken(datum, id, title):
@@ -57,10 +67,11 @@ def scraper():
 
         for data in loginData:
             if "token" in str(data):
-                print(str(data))
                 token = str(data).split('value="')[-1][:-3]
 
-        formData = {"refer": "", "token": token, "loginnaam": "", "password": ""}
+        formData = {"refer": "", "token": token, "loginnaam": "stefanpoot", "password": "Newlife010!"}
+        print(token, username, password)
+        print(formData["loginnaam"], formData["password"])
 
         r = s.post(url_login, data=formData, headers=headers)
         if str(r) == "<Response [200]>":
