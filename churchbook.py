@@ -24,15 +24,15 @@ roosterUrl = "https://newlife010.churchbook.nl/locatie/sp_agenda.cfc?method=getE
 headers = {"user-agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/87.0.4280.101 Safari/537.36"}
 checkPersonen = ["Stefan Poot", "Anne Lucia Snel"]
 SCOPES = ['https://www.googleapis.com/auth/calendar']
-calendar = True
+calendar = False
 
 today = datetime.now().strftime("%Y-%m-%d")
 print(datetime.now().strftime("%d-%m-%Y"))
 
 with open("inlog.txt", "r") as f:
-    data = f.read()
+    data = f.readline()
     username = str(data.split(",")[0])
-    password = str(data.split(",")[1])
+    password = str(data.split(",")[1][:-1])
 
 def scraper():
     def ingedeeldChecken(datum, id, title):
@@ -69,9 +69,7 @@ def scraper():
             if "token" in str(data):
                 token = str(data).split('value="')[-1][:-3]
 
-        formData = {"refer": "", "token": token, "loginnaam": "stefanpoot", "password": "Newlife010!"}
-        print(token, username, password)
-        print(formData["loginnaam"], formData["password"])
+        formData = {"refer": "", "token": token, "loginnaam": username, "password": password}
 
         r = s.post(url_login, data=formData, headers=headers)
         if str(r) == "<Response [200]>":
